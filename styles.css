@@ -1,242 +1,232 @@
-/* Общие стили */
-body {
+*,
+*::before,
+*::after {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to bottom right, #A8DADC, #457B9D);
-    min-height: 100vh;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Header */
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    background: linear-gradient(to right, #3B7EA1, #FFBC97);
-    color: #2D3142;
-    border-bottom: 2px solid #2D3142;
-    z-index: 1000;
+:root {
+    --monet-sunrise: #f28c38; /* Теплый оранжевый рассвет */
+    --monet-sky: #a3c4f3; /* Светло-голубой */
+    --monet-sea: #4a6fa5; /* Темно-синий */
+    --monet-shadow: #8e5572; /* Фиолетовые тени */
+    --monet-bg: #f9e4d4; /* Пастельный кремовый фон */
+    --monet-accent: #ffcb69; /* Желто-оранжевый акцент */
+    --white: #fff;
+    --black: #000;
 }
 
-.logo {
-    font-size: 40px;
-    margin-right: 15px;
+body {
+    background: linear-gradient(135deg, var(--monet-sky), var(--monet-sea));
+    font-family: 'Roboto', sans-serif;
+    color: var(--monet-shadow);
 }
 
 .title {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    font-weight: bold;
+    color: var(--monet-sunrise);
+    text-align: center;
+    margin: 30px 0;
+    font-size: 2.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.subtitle {
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    color: #2D3142;
+#dessert-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
 }
 
-.toolbar {
-    margin-left: auto;
+.dessert-card {
+    background: var(--monet-bg);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 200px;
+    min-height: 220px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 600px;
+    justify-content: space-between;
 }
 
-.edit-bar {
-    width: 100%;
+.dessert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
-#cell-editor {
-    width: 100%;
-    padding: 4px;
-    font-size: 14px;
-    border: 1px solid #CED4DA;
-    border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
+.dessert-price {
+    font-size: 1.2rem;
+    color: var(--monet-sunrise);
 }
 
-.formatting {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.formatting select, .formatting input, .formatting button {
-    padding: 4px 8px;
-    font-size: 14px;
-    border: 1px solid #CED4DA;
-    border-radius: 4px;
-    background-color: white;
+.btn {
     cursor: pointer;
+    padding: 10px;
+    color: var(--white);
+    background: linear-gradient(var(--monet-sunrise), var(--monet-accent));
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.1s ease, filter 0.1s ease;
 }
 
-.formatting input[type="number"] {
-    width: 60px;
+.btn:hover {
+    background: linear-gradient(var(--monet-accent), var(--monet-sunrise));
 }
 
-.formatting button {
-    width: 30px;
-    height: 30px;
+.btn:active {
+    transform: scale(0.95);
+    filter: brightness(1.2);
+}
+
+.add-to-cart-btn.clicked {
+    background: var(--monet-sea);
+    transform: scale(1);
+    animation: showCheckmark 0.3s ease-in-out;
+}
+
+@keyframes showCheckmark {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+#cart-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.add-to-cart-btn {
+    margin-top: 10px;
+    width: 100%;
+}
+
+#cart-container {
+    display: none;
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: var(--monet-bg);
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 20px;
+    animation: slideIn 0.3s ease;
+}
+
+#products-container {
+    max-height: 300px; /* Фиксированная высота для скролла */
+    overflow-y: auto; /* Вертикальный скролл */
+    margin-bottom: 15px;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
+.product-left {
+    flex: 1;
+    text-align: left;
+}
+
+.product-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.product-count {
+    margin-right: 10px;
+    color: var(--monet-sea);
+    font-weight: 500;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantity-btn {
+    background: var(--monet-shadow);
+    color: var(--white);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.quantity-btn:hover {
+    background: var(--monet-sea);
+}
+
+.remove-btn {
+    background: var(--monet-shadow);
+    color: var(--white);
+    border: none;
+    padding: 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.formatting button:hover {
-    background-color: #E6F3FF;
+.remove-btn:hover {
+    background: var(--monet-sea);
 }
 
-.color-picker {
-    display: flex;
-    gap: 5px;
+.product-category {
+    margin: 10px 0;
+    color: var(--monet-sea);
 }
 
-#background-color {
-    width: 50px;
-    background-color: #FFFFFF; /* Начальный цвет */
+#cart-container h3,
+#cart-container p {
+    font-size: 1.3rem;
+    margin: 10px 0;
+    color: var(--monet-shadow);
 }
 
-#background-color option {
-    height: 20px;
-    padding: 0;
+@media (min-width: 768px) {
+    .dessert-card {
+        flex: 1 0 18%;
+        max-width: 220px;
+    }
+
+    #cart-container {
+        width: 400px;
+    }
 }
 
-#background-color option[value="#FFFFFF"] {
-    background-color: #FFFFFF;
+@media (max-width: 767px) {
+    #cart-container {
+        width: 380px;
+    }
 }
 
-#background-color option[value="#FF0000"] {
-    background-color: #FF0000;
-}
-
-#background-color option[value="#0000FF"] {
-    background-color: #0000FF;
-}
-
-#background-color option[value="#008000"] {
-    background-color: #008000;
-}
-
-#background-color option[value="#FFFF00"] {
-    background-color: #FFFF00;
-}
-
-#background-color option:hover {
-    background-color: inherit !important; /* Убираем затемнение */
-}
-
-/* Основной контейнер */
-main {
-    padding: 20px;
-    margin-top: 150px; /* Отступ для фиксированного header */
-}
-
-/* Уведомление */
-.notification {
-    position: fixed;
-    top: 160px; /* Ниже header */
-    right: 20px;
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 4px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    z-index: 1000;
-}
-
-.notification.show {
-    opacity: 1;
-}
-
-/* Таблица: колонка с цифрами + 10 столбцов букв */
-#container {
-    display: grid;
-    grid-template-columns: 50px repeat(10, 300px); /* Фиксированная ширина столбцов */
-    grid-auto-rows: minmax(40px, auto); /* Увеличим минимальную высоту строк */
-    gap: 2px; /* Добавляем небольшой промежуток между ячейками */
-    background-color: #CED4DA; /* Цвет фона для промежутков */
-}
-
-/* Заголовки столбцов (буквы) */
-.header-cell {
-    background-color: #B2DFF7;
-    text-align: center;
-    padding: 4px 0;
-    font-weight: bold;
-    border-radius: 6px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    cursor: pointer;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-}
-
-/* Метки строк (цифры) */
-.row-label {
-    background-color: #F8E8C1;
-    text-align: center;
-    padding: 4px 0;
-    font-weight: bold;
-    border-radius: 6px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    cursor: pointer;
-    box-sizing: border-box;
-    height: 100%;
-    margin: 0;
-}
-
-/* Ячейки */
-.cell {
-    display: block; /* Меняем с flex на block */
-    width: 100%;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    position: relative; /* Для правильного наложения z-index */
-}
-
-.cell div[contenteditable] {
-    width: 100%;
-    min-height: 40px; /* Увеличим минимальную высоту ячейки */
-    min-width: 100px; /* Минимальная ширина ячейки */
-    max-width: 300px; /* Максимальная ширина ячейки */
-    max-height: 200px; /* Максимальная высота ячейки */
-    box-sizing: border-box;
-    border: none; /* Убираем границы, чтобы не создавать промежутков */
-    border-radius: 6px;
-    padding: 4px;
-    font-size: 14px;
-    font-family: 'Poppins', sans-serif;
-    background-color: white;
-    transition: box-shadow 0.3s;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    overflow: auto; /* Добавляем прокрутку, если содержимое превышает размеры */
-    display: block; /* Явно задаём блочный элемент */
-    box-shadow: 0 0 0 1px #CED4DA; /* Заменяем border на box-shadow */
-    position: relative; /* Для z-index */
-    z-index: 1; /* Базовый уровень для невыделенных ячеек */
-}
-
-.cell div[contenteditable]:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px #00bcd4, 0 0 8px rgba(0, 188, 212, 0.5); /* Увеличиваем тень */
-    z-index: 2; /* Поднимаем над невыделенными ячейками */
-}
-
-.cell div[contenteditable].selected {
-    box-shadow: 0 0 0 4px #1E90FF, 0 0 8px rgba(30, 144, 255, 0.5); /* Увеличиваем тень */
-    z-index: 2; /* Поднимаем над невыделенными ячейками */
-}
-
-.cell div[contenteditable].active {
-    box-shadow: 0 0 0 4px #00bcd4, 0 0 8px rgba(0, 188, 212, 0.5); /* Увеличиваем тень */
-    z-index: 2; /* Поднимаем над невыделенными ячейками */
-}
+/* Подключение шрифта Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
